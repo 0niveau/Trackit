@@ -1,5 +1,6 @@
 package com.nico.trackit;
 
+import java.util.Map;
 import java.util.Set;
 
 public abstract class GroupPurchaseComponent {
@@ -33,5 +34,7 @@ public abstract class GroupPurchaseComponent {
 	public abstract int getPrice();
 
 	public abstract PurchaseComponent getUserComponent(User user);
+
+	public abstract int getUserClaims(User creditor, User debtor);
 
 }

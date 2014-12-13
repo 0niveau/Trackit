@@ -47,4 +47,8 @@ public class UserGroup {
 			user.addAll(purchaseComponents);
 		}
 	}
+
+	public void doSomething() {
+
+	}
 }

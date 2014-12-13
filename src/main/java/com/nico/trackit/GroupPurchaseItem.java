@@ -2,17 +2,20 @@ package com.nico.trackit;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GroupPurchaseItem extends GroupPurchaseComponent {
 	
 	private int price;
 	private Map<User, Integer> distributionMap;
+	private User purchaser;
 	
-	public GroupPurchaseItem (String name, int price, Map<User, Integer> distributionMap) {
+	public GroupPurchaseItem (String name, int price, User purchaser, Map<User, Integer> distributionMap) {
 		this.setName(name);
-		this.setPrice(price);
-		setUsers(distributionMap.keySet());
+		this.price = price;
+		this.purchaser = purchaser;
 		this.distributionMap = distributionMap;
+		setUsers(distributionMap.keySet());
 	}
 
 	public void setPrice(int price) {
@@ -40,5 +43,13 @@ public class GroupPurchaseItem extends GroupPurchaseComponent {
 		int itemPrice = getPriceDistribution().get(user);
 		PurchaseItem purchaseItem = new PurchaseItem(getName(), itemPrice);
 		return purchaseItem;
+	}
+
+	public int getUserClaims(User creditor, User debtor) {
+		if (this.purchaser.equals(creditor)) {
+			return getPriceDistribution().get(debtor);
+		} else {
+			return 0;
+		}
 	}
 }

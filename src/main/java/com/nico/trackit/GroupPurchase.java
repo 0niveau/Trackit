@@ -2,6 +2,7 @@ package com.nico.trackit;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,4 +42,9 @@ public class GroupPurchase extends GroupPurchaseComponent{
 		
 	}
 
+	public int getUserClaims(User creditor, User debtor) {
+		return groupPurchaseComponents.stream()
+									  .map(g -> g.getUserClaims(creditor, debtor))
+									  .reduce(0, (a,b) -> a+b);
+	}
 }
