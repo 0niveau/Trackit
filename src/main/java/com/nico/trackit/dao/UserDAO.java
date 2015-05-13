@@ -7,7 +7,7 @@ import com.nico.trackit.model.User;
  */
 public interface UserDAO {
 
-    public boolean createUser(User user);
+    public int createUser(User user);
 
     public User getUserByUsername(String username);
 

@@ -8,9 +8,18 @@ import java.util.Set;
  * Created by Nico on 17.03.2015.
  */
 public class GroupAccount {
+    int id;
     String title;
     Set<User> users;
-    List<GroupPurchase> purchases;
+    List<Purchase> purchases;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -41,19 +50,19 @@ public class GroupAccount {
         }
     }
 
-    public List<GroupPurchase> getPurchases() {
+    public List<Purchase> getPurchases() {
         return purchases;
     }
 
-    public void setPurchases(List<GroupPurchase> purchases) {
+    public void setPurchases(List<Purchase> purchases) {
         this.purchases = purchases;
     }
 
-    public void addPurchase(GroupPurchase purchase) {
+    public void addPurchase(Purchase purchase) {
         purchases.add(purchase);
     }
 
-    public void removePurchase(GroupPurchase purchase) {
+    public void removePurchase(Purchase purchase) {
         purchases.remove(purchase);
     }
 }

@@ -1,10 +1,9 @@
 package com.nico.trackit.resources;
 
 import com.nico.trackit.dao.UserDAO;
-import com.nico.trackit.dao.UserDAOImpl;
 import com.nico.trackit.model.User;
-import com.nico.trackit.setup.DatabaseConnectionProviderImpl;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 
 /**
@@ -15,14 +14,15 @@ public class UserResource {
 
     private final UserDAO userDAO;
 
-    public UserResource() {
-        this.userDAO = new UserDAOImpl(new DatabaseConnectionProviderImpl());
+    @Inject
+    public UserResource(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @POST
     @Consumes("application/json")
     public String createUser (User user){
-        if (userDAO.createUser(user)) {
+        if (userDAO.createUser(user) > 0) {
             return "yei";
         } else {
             return "oh nooooo";

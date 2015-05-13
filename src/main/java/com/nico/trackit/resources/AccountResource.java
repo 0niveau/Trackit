@@ -1,12 +1,10 @@
 package com.nico.trackit.resources;
 
 import com.nico.trackit.dao.GroupAccountDAO;
-import com.nico.trackit.dao.GroupAccountDAOImpl;
 import com.nico.trackit.model.GroupAccount;
-import com.nico.trackit.model.GroupPurchaseItem;
 import com.nico.trackit.model.User;
-import com.nico.trackit.setup.DatabaseConnectionProviderImpl;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 
 /**
@@ -18,7 +16,10 @@ public class AccountResource {
 
     private final GroupAccountDAO groupAccountDAO;
 
-    public AccountResource () { this.groupAccountDAO = new GroupAccountDAOImpl(new DatabaseConnectionProviderImpl());}
+    @Inject
+    public AccountResource (GroupAccountDAO groupAccountDAO) {
+        this.groupAccountDAO = groupAccountDAO;
+    }
 
     @GET
     public String getResourceName() {
@@ -31,7 +32,7 @@ public class AccountResource {
         System.out.println("received a groupAccount");
         User creatingUser = new User();
         creatingUser.setUserId(userId);
-        if (groupAccountDAO.createGroupAccount(groupAccount, creatingUser)) {
+        if (groupAccountDAO.createGroupAccount(groupAccount) > 0) {
             System.out.println( "created Group Account: " + groupAccount.getTitle());
         } else {
             System.out.println( "could not create Group Account: " + groupAccount.getTitle());

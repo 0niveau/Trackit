@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface GroupAccountDAO {
 
-    public boolean createGroupAccount(GroupAccount groupAccount, User user);
+    public int createGroupAccount(GroupAccount groupAccount);
 
     public boolean updateGroupAccount(GroupAccount groupAccount);
 

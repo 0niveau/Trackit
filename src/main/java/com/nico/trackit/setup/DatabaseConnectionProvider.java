@@ -6,6 +6,7 @@ import java.sql.Statement;
 /**
  * Created by Nico on 26.03.2015.
  */
+
 public interface DatabaseConnectionProvider {
 
     public Connection getTrackItDatabase();

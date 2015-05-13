@@ -1,6 +1,9 @@
 ## IntelliJ files
-Trackit.iml
+*.iml
 .idea
 
 ## target
 /target
+
+## Mac OS
+**/.DS_Store

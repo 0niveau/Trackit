@@ -1,5 +1,6 @@
 package com.nico.trackit.dao;
 
+import com.google.inject.Inject;
 import com.nico.trackit.model.User;
 import com.nico.trackit.setup.DatabaseConnectionProvider;
 
@@ -15,22 +16,24 @@ public class UserDAOImpl implements UserDAO {
 
     private final DatabaseConnectionProvider databaseConnectionProvider;
 
+    @Inject
     public UserDAOImpl(DatabaseConnectionProvider databaseConnectionProvider) {
         this.databaseConnectionProvider = databaseConnectionProvider;
     }
 
-    public boolean createUser(User user) {
+    public int createUser(User user) {
 
         Connection database = databaseConnectionProvider.getTrackItDatabase();
         PreparedStatement createUserStatement = null;
 
         try {
-            createUserStatement = database.prepareStatement(INSERT_USER);
+            createUserStatement = database.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             createUserStatement.setString(1, user.getName());
             createUserStatement.setString(2, user.getPassword());
-            if  (createUserStatement.executeUpdate() > 0) {
-                return true;
-            }
+            createUserStatement.executeUpdate();
+            ResultSet resultSet = createUserStatement.getResultSet();
+            int userId = resultSet.getInt(1);
+            return userId;
         } catch (SQLException e) {
             // TODO: logging
             e.printStackTrace();
@@ -40,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
             }
             databaseConnectionProvider.closeConnection(database);
         }
-        return false;
+        return 0;
     }
 
     public User getUserByUsername(String username) {
